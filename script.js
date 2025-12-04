@@ -182,7 +182,7 @@ function saveData() { localStorage.setItem('lipstickCollection_v3', JSON.stringi
 function updateHeaderCount() { const el = document.getElementById('headerTotalCount'); if(el) el.textContent = lipsticks.length; }
 function rgbToHex(r, g, b) { return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1); }
 
-// 🤖 AI 분석 (11가지 톤)
+// 🤖 AI 분석
 function suggestTone(r,g,b) {
     let rabs = r / 255, gabs = g / 255, babs = b / 255;
     let max = Math.max(rabs, gabs, babs), min = Math.min(rabs, gabs, babs);
@@ -203,7 +203,7 @@ function suggestTone(r,g,b) {
     }
 }
 
-// 📊 막대 그래프 (통계) - 11가지 톤 & 사용자 지정 색상
+// 📊 막대 그래프
 function updateAnalysis() {
     const section = document.getElementById('analysisSection');
     if (!section) return;
@@ -223,12 +223,8 @@ function updateAnalysis() {
     if (canvas) {
         const ctx = canvas.getContext('2d');
         if (myChart) myChart.destroy();
-        // 🌈 사용자 지정 색상 적용 (순서 중요)
         const toneColors = [
-            '#e56b68', '#fa361c', // 봄
-            '#f0a9b1', '#e55c9d', '#c0595a', // 여름
-            '#c96f6f', '#b65e61', '#4d313d', // 가을
-            '#D31C43', '#852438', '#4c1d30'  // 겨울
+            '#e56b68', '#fa361c', '#f0a9b1', '#e55c9d', '#c0595a', '#c96f6f', '#b65e61', '#4d313d', '#D31C43', '#852438', '#4c1d30'
         ];
         myChart = new Chart(ctx, {
             type: 'bar',
@@ -240,7 +236,6 @@ function updateAnalysis() {
         });
     }
     
-    // 멘트 업데이트
     const sorted = Object.entries(counts).sort((a, b) => b[1] - a[1]);
     const max = sorted[0];
     let text = `<div class="flex flex-col items-center justify-center text-center"><span class="text-sm text-gray-400 mb-1">최다 보유 톤</span><div class="text-xl text-rose-600 font-bold flex items-center gap-2">✨ ${max[0]} <span class="bg-rose-100 text-rose-600 text-xs px-2 py-1 rounded-full">${max[1]}개</span></div></div>`;
@@ -248,7 +243,7 @@ function updateAnalysis() {
     if (analysisText) analysisText.innerHTML = text;
 }
 
-// 🎯 사분면 차트 (Color Map)
+// 🎯 사분면 차트 (안전장치 추가됨)
 function updateScatterChart() {
     const canvas = document.getElementById('scatterChart');
     if (!canvas) return;
@@ -269,14 +264,19 @@ function updateScatterChart() {
             case '겨울 쿨 브라이트':return { x: 2 + jitter(), y: -2 + jitter() };
             case '겨울 쿨 딥':      return { x: 4 + jitter(), y: -5 + jitter() };
             case '겨울 쿨 다크':    return { x: 6 + jitter(), y: -7 + jitter() };
-            default: return null;
+            default: return null; // 🚨 알 수 없는 톤이면 null 반환
         }
     };
 
-    const scatterData = lipsticks.filter(l => l.personalColor !== '잘 모름').map(l => {
-        const coords = mapToneToCoords(l.personalColor);
-        return { x: coords.x, y: coords.y, brand: l.brand, name: l.name, colorCode: l.colorCode };
-    });
+    // 🚨 여기서 null 체크를 해서 오류 방지
+    const scatterData = lipsticks
+        .filter(l => l.personalColor !== '잘 모름')
+        .map(l => {
+            const coords = mapToneToCoords(l.personalColor);
+            if (!coords) return null; // 좌표가 없으면 건너뜀
+            return { x: coords.x, y: coords.y, brand: l.brand, name: l.name, colorCode: l.colorCode };
+        })
+        .filter(item => item !== null); // null 값 제거
 
     scatterChart = new Chart(ctx, {
         type: 'scatter',
