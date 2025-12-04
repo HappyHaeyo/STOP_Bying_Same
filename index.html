@@ -6,11 +6,8 @@
     <title>하늘 아래 같은 색조 없다</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
-    
     <script src="https://unpkg.com/lucide@latest"></script>
-    
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/color-thief/2.3.0/color-thief.umd.js"></script>
     
     <link rel="stylesheet" href="style.css">
@@ -33,12 +30,12 @@
         
         <div id="analysisSection" class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8 fade-in hidden">
             
-            <div class="bg-white p-6 rounded-3xl shadow-sm border border-rose-100 flex flex-col">
+            <div class="bg-white p-6 rounded-3xl shadow-sm border border-rose-100 flex flex-col justify-between">
                 <h2 class="text-lg font-bold mb-4 flex items-center gap-2 text-slate-700">
                     <i data-lucide="bar-chart-2" class="w-5 h-5 text-rose-500"></i>
                     보유 현황 통계
                 </h2>
-                <div class="flex-1 min-h-[300px] relative w-full">
+                <div class="flex-1 relative w-full h-64 lg:h-auto min-h-[250px]">
                     <canvas id="personalColorChart"></canvas>
                 </div>
                 <div class="bg-slate-50 rounded-xl p-4 text-sm leading-relaxed border border-slate-100 mt-4">
@@ -46,25 +43,26 @@
                 </div>
             </div>
 
-            <div class="bg-white p-6 rounded-3xl shadow-sm border border-rose-100 flex flex-col relative overflow-hidden">
-                <div class="flex justify-between items-center mb-4">
+            <div class="bg-white p-6 rounded-3xl shadow-sm border border-rose-100 flex flex-col relative overflow-hidden h-[400px]">
+                <div class="flex justify-between items-center mb-2 z-10">
                     <h2 class="text-lg font-bold flex items-center gap-2 text-slate-700">
                         <i data-lucide="crosshair" class="w-5 h-5 text-rose-500"></i>
                         컬러 맵 (Color Map)
                     </h2>
-                    <span class="text-xs text-gray-400 bg-gray-100 px-2 py-1 rounded-full">Light / Deep / Warm / Cool</span>
+                    <span class="text-[10px] text-gray-400 bg-gray-100 px-2 py-1 rounded-full">Light / Deep / Warm / Cool</span>
                 </div>
                 
-                <div class="absolute inset-0 pointer-events-none z-0 flex flex-col justify-center items-center opacity-10">
-                    <div class="w-full h-px bg-rose-900 absolute top-1/2"></div>
-                    <div class="h-full w-px bg-rose-900 absolute left-1/2"></div>
+                <div class="absolute inset-0 pointer-events-none z-0 flex flex-col justify-center items-center">
+                    <div class="w-full h-px bg-rose-100 absolute top-1/2"></div>
+                    <div class="h-full w-px bg-rose-100 absolute left-1/2"></div>
+                    
+                    <div class="absolute top-12 left-6 text-xl font-bold text-orange-200/50">Spring</div>
+                    <div class="absolute top-12 right-6 text-xl font-bold text-purple-200/50">Summer</div>
+                    <div class="absolute bottom-6 left-6 text-xl font-bold text-amber-200/50">Autumn</div>
+                    <div class="absolute bottom-6 right-6 text-xl font-bold text-rose-200/50">Winter</div>
                 </div>
-                <div class="absolute top-16 left-8 text-2xl font-bold text-orange-200 pointer-events-none z-0">Spring</div>
-                <div class="absolute top-16 right-8 text-2xl font-bold text-purple-200 pointer-events-none z-0">Summer</div>
-                <div class="absolute bottom-8 left-8 text-2xl font-bold text-amber-200 pointer-events-none z-0">Autumn</div>
-                <div class="absolute bottom-8 right-8 text-2xl font-bold text-rose-200 pointer-events-none z-0">Winter</div>
 
-                <div class="flex-1 min-h-[300px] relative w-full z-10">
+                <div class="absolute inset-0 pt-12 pb-4 px-4 z-10">
                     <canvas id="scatterChart"></canvas>
                 </div>
             </div>
