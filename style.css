@@ -3,14 +3,14 @@
 
 body {
     font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
-    /* PC에서는 배경이 스크롤 따라 움직이지 않게 고정(fixed) */
+    /* PC 배경 고정 (스크롤해도 배경은 가만히) */
     background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
     background-attachment: fixed; 
     color: #4b5563;
-    min-height: 100vh; /* 컨텐츠가 적어도 화면 꽉 채우기 */
+    min-height: 100vh;
 }
 
-/* 🖱️ PC용 커스텀 스크롤바 (숨기지 않고 예쁘게 꾸밈) */
+/* 🖱️ 예쁜 커스텀 스크롤바 */
 ::-webkit-scrollbar {
     width: 8px;
     height: 8px;
@@ -26,7 +26,7 @@ body {
     background: #9ca3af; 
 }
 
-/* 가로 스크롤바 숨김 유틸리티 (필요한 곳만) */
+/* 유틸리티: 스크롤바 숨기기 (가로 스크롤 메뉴용) */
 .no-scrollbar::-webkit-scrollbar {
     display: none;
 }
@@ -35,20 +35,20 @@ body {
     scrollbar-width: none;
 }
 
-/* 헤더: 유리 질감 (PC에선 블러 효과 더 강하게) */
+/* 헤더: 유리 질감 */
 .glass-header {
-    background: rgba(255, 255, 255, 0.6);
+    background: rgba(255, 255, 255, 0.65);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     border-bottom: 1px solid rgba(255, 255, 255, 0.5);
     z-index: 50;
 }
 
-/* 카드 디자인: PC에서는 그림자를 조금 더 주어 입체감 살리기 */
+/* 카드 디자인: PC 화면에서 더 예쁜 그림자 */
 .bg-white {
-    background: rgba(255, 255, 255, 0.85) !important; /* 가독성을 위해 불투명도 약간 올림 */
+    background: rgba(255, 255, 255, 0.9) !important;
     backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.8);
     box-shadow: 0 4px 20px -2px rgba(0,0,0,0.05), 0 10px 15px -3px rgba(0,0,0,0.01);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
@@ -72,7 +72,7 @@ body {
     box-shadow: 0 0 0 3px rgba(244, 63, 94, 0.1);
 }
 
-/* 필터 칩: 마우스 호버 효과 추가 (PC 전용) */
+/* 필터 칩 버튼 */
 .filter-chip {
     padding: 8px 18px;
     border-radius: 100px;
@@ -83,7 +83,7 @@ body {
     font-weight: 600;
     white-space: nowrap;
     transition: all 0.2s;
-    cursor: pointer; /* 마우스 커서 손가락 모양 */
+    cursor: pointer;
 }
 
 .filter-chip:hover {
@@ -98,7 +98,7 @@ body {
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 }
 
-/* 컬러칩 */
+/* 컬러칩 테두리 */
 .color-swatch {
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     border: 2px solid white;
@@ -108,7 +108,5 @@ body {
 .fade-in { animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
 
-/* PC에서 클릭 가능한 요소들에 호버 효과 추가 */
-button, label, select {
-    cursor: pointer;
-}
+/* 커서 설정 */
+button, label, select { cursor: pointer; }
